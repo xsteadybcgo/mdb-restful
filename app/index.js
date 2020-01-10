@@ -2,8 +2,9 @@ const Koa = require('koa');
 const koaBody = require('koa-body')
 const jsonError = require('koa-json-error')
 const parameter = require('koa-parameter')
+const koaStatic = require('koa-static')
 const mongoose = require('mongoose')
-const path = ('path')
+const path = require('path')
 const routing = require('./routes')
 const { connectionStr } = require('../config')
 
@@ -18,6 +19,7 @@ mongoose.connect(connectionStr, {
 })
 mongoose.connection.on('error', console.error)
 
+app.use(koaStatic(path.join(__dirname, '../public')))
 app.use(jsonError({
     postFormat: (err, { stack, ...rest }) => process.env.NODE_EVN === 'production' ? rest : { stack, ...rest }
 }))
@@ -25,7 +27,7 @@ app.use(parameter(app))
 app.use(koaBody({
     multipart: true, // 启用文件格式
     formidable: {
-        uploadDir: path.join(__dirname, '/public/uploads'),
+        uploadDir: path.join(__dirname, '../public/uploads'),
         keepExtensions: true
     }
 }))
