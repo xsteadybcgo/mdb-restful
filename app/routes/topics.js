@@ -5,7 +5,9 @@ const {
     find,
     findById,
     create,
-    updateById
+    updateById,
+    checkTopicExist,
+    listFollowers
 } = require('../controllers/topics')
 
 const router = new Router({ prefix: '/topics' })
@@ -14,11 +16,13 @@ const auth = jwt({ secret: tokenSecret })
 
 router.get('/', find)
 
-router.get('/:id', findById)
-
 router.post('/', auth, create)
 
-router.patch('/:id', auth, updateById)
+router.get('/:id', checkTopicExist, findById)
 
+router.patch('/:id', auth, checkTopicExist, updateById)
+
+// 获取话题粉丝列表
+router.get('/:id/followers', checkTopicExist, listFollowers)
 
 module.exports = router
