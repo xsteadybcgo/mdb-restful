@@ -7,7 +7,8 @@ const {
     create,
     updateById,
     checkTopicExist,
-    listFollowers
+    listFollowers,
+    listQuestions
 } = require('../controllers/topics')
 
 const router = new Router({ prefix: '/topics' })
@@ -25,4 +26,5 @@ router.patch('/:id', auth, checkTopicExist, updateById)
 // 获取话题粉丝列表
 router.get('/:id/followers', checkTopicExist, listFollowers)
 
+router.get('/:id/questions', checkTopicExist, listQuestions)
 module.exports = router

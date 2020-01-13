@@ -1,17 +1,20 @@
 const Topic = require('../models/topics')
 const User = require('../models/users')
+const Question = require('../models/questions')
 
 class Topics {
     async find(ctx) {
         const { per_page = 10, page = 1 } = ctx.query
         const pages = Math.max(page * 1, 1) - 1
         const perPage = Math.max(per_page * 1, 1)
-        ctx.body = await Topic.find().limit(perPage).skip(pages * perPage)
+        ctx.body = await Topic.find()
+            .limit(perPage)
+            .skip(pages * perPage)
     }
 
     async findById(ctx) {
         const { fields = '' } = ctx.query
-        const selectTopics = fields.split(';').filter(v => v).map(v => " +" + v).join('')
+        const selectTopics = fields.split(';').filter(v => v).map(v => ' +' + v).join('')
         const topic = await Topic.findById(ctx.params.id).select(selectTopics)
         ctx.body = topic
     }
@@ -45,6 +48,11 @@ class Topics {
     async listFollowers(ctx) {
         const users = await User.find({ followingTopics: ctx.params.id })
         ctx.body = users
+    }
+
+    async listQuestions(ctx) {
+        const question = await Question.find({ topics: ctx.params.id })
+        ctx.body = question
     }
 }
 
