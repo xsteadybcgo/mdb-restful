@@ -1,5 +1,4 @@
 const Answer = require('../models/Answers')
-// const User = require('../models/Answer')
 
 class AnswerController {
     async create(ctx) {
