@@ -51,7 +51,7 @@ class AnswerController {
         if (!Answer) {
             ctx.throw(404, '答案不存在！')
         }
-        if (Answer.questionId !== ctx.params.questionId) {
+        if (ctx.params.questionId && ctx.params.questionId !== ctx.params.questionId) {
             ctx.throw(404, '该问题下没有子答案')
         }
         ctx.state.Answer = Answer
