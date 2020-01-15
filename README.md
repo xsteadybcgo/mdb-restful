@@ -1,3 +1,5 @@
+![travis CI](https://travis-ci.com/xsteadybcgo/mdb-restful.svg?branch=master)
+
 # mdb-restful
 
 koa2+mongodb 实践restful api
